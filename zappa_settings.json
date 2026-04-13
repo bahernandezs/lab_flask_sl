@@ -1,0 +1,19 @@
+{
+    "dev": {
+        "app_function": "app.app",
+        "aws_region": "us-east-1",
+        "exclude": [
+            "boto3",
+            "dateutil",
+            "botocore",
+            "s3transfer",
+            "concurrent"
+        ],
+        "profile_name": "default",
+        "project_name": "lab-flask-sl",
+        "runtime": "python3.14",
+        "events": [],
+        "keep_warm": false,
+        "s3_bucket": "zappa-99y0lm5ib"
+    }
+}
