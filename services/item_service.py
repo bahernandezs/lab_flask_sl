@@ -1,5 +1,10 @@
+import os
 from repositories.memory_repo import MemoryItemRepository
+from repositories.dynamo_repo import DynamoItemRepository
 from typing import Optional
+
+
+
 
 
 class ItemService:
@@ -8,10 +13,14 @@ class ItemService:
     No sabe si los datos vienen de memoria o DynamoDB —
     eso es responsabilidad del repositorio.
     """
-
     def __init__(self, repository=None):
-        # Inyección de dependencias: permite cambiar el repositorio fácilmente
-        self.repo = repository or MemoryItemRepository()
+        if repository:
+            self.repo = repository
+        elif os.getenv("USE_DYNAMO", "false").lower() == "true":
+            self.repo = DynamoItemRepository()
+        else:
+            self.repo = MemoryItemRepository()
+
 
     def create(self, data: dict) -> tuple[dict, int]:
         """Crea un item. Retorna (item, http_status_code)."""
